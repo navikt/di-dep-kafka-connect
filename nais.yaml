@@ -6,7 +6,7 @@ metadata:
   labels:
     team: di_dep
 spec:
-  image: voldern/kafka-connect-nav:0.0.6
+  image: comesfromci
   resources:
     limits:
       cpu: 1000m

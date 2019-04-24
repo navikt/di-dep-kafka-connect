@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+script:
+  - export COMMIT_SHORT=$(git rev-parse --short HEAD)
+  - docker build -t $DOCKER_IMG_NAME:$COMMIT_SHORT .
+before_deploy:
+  openssl aes-256-cbc -K $encrypted_0ff9a783091d_key -iv $encrypted_0ff9a783091d_iv -in travis/di-dep-ci.key.pem.enc -out travis/di-dep-ci.key.pem -d
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: travis/deploy.sh
+    on:
+      branch: initial
+env:
+  global:
+    - DOCKER_IMG_NAME=navikt/di-dep-kafka-connect
+    - GITHUB_APP_ID=29518
+    # DOCKER_USERNAME
+    - secure: "Yt79AewrEykwL6wAv/S4TWCJ1ABX9rSzs1UJsy4HG7Z7OH/ENR1DGRI2lyK/6IS73+3pPiHTNKD4M6GLuLbh40FAnfnYxCjnrCHYZZXMSHwvy9nHSGUTDhvhEQXAV9Em8397uEX9QtvKcxi1q39gYvgJpDorBUej6XCsX6Xqmbn/Pz8mZVGEHWqnzfOQmb5BYkAsFIzWRNRr9aT8W6iv3gknsWoZ6v9HZmnCk0Uo6cKFlNzizZNexYXULp0422+gSpKnPKGoxmSUr4Sqvh3btYVSKqtkHmcYlrLHQLAmBu9PmnU5vQEVWt1bo99CndJvEhJC2sZ8P6pK19EK+A8nEPXHaO1akb3Oz+AJas7RlGIwxjZa9RPIBxPWvO8dyFvVJ5QwnEwLb6zRcABqChoFGnKG5b68SkQauViluK5eF7yNCsFNRDzlf/viSa+3eoUJqENPdXytr6HrupEKQGOiYJzbNdvvv0sUIxtI0acUkCmEwKeLfYmUEFnmIsUs1NuFqJSkaQtSQ1W3bMIFMBipZW+FhWGTPF/PzAa9CGSIhzGnXm7Kbr9oPEPY3pkXGEuytY/9h9rmdHYh+5oWtICwr76BqvrHUAvQn2NJ86Sovfuu3q/SiicW9adk0/jn2lgQle/bLyzNtX1vOzyLItkubItbiXqvygjpmU78acW+kAU="
+    # DOCKER_PASSWORD
+    - secure: "Q9llVNqDZDAbntYYNwOtYHM3BePzygkK0Ksq8h5WKZpjHzQ0t5d0KiG6WR57XvVyz75TdOUJTSIuWFfgJtVMK/pw1gFd/d++ivSarrMytRThcXyHNRA5che/Sg3zYMFpF9I6WAkN4bAJ8lwk2N6ZEu+v7yAAVXO3yLLNiMrTSB9XJieEA1eJ8XmxgdYUdnM8munBwbNSOXyQ/XwSAdXlBoXqv3/HiWSotVw6mmDt2uTwmeHNk81wBIuwJ5mQopSU0fy9OH8tVjmIYy8CjN8kT5mmpVSgWe2gshfEUWXuG3D8OiPdXrSQFaEKIffQrAeCZQvf/wFLMTN0VAIxzw56JHZW2AHIHdxeMI72vTaXLcT+2dqDbhuG7lhYT9o/rLbLBrCc/JogRdICwhWr221dcxYaz+wuhHi0jENgruv5Ir7jxDuNY+9wC0FlvTQrK3W/IwjksCd0JZNRgybVx4/pUgP1SVEkA0pR0zC4EZdcVwr3sJ0wokOaWg2AA0sFkTYj/YUzW8n8wgGNitmFIcDDE7JD6Awzu56XgVVMbVw+xbZ2SrEVpIeMruzh5mD4hrkBzzUh3TiFp6BDPuktaAzz/bUmzU4K10hyXhaOaoegXX8OiVxh6kyMyRp8fP+l9jDqJEtdygkmP8JIqZYk/Wk3OnQSlBywNbdF0eSwN5/tZWw="
