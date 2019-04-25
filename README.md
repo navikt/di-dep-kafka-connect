@@ -8,7 +8,7 @@ Docker Kafka Connect image for deployment on [NAIS](https://nais.io/) based on [
 
 Kafka Connect needs [three topics](https://docs.confluent.io/current/connect/userguide.html#distributed-mode) to run in distributed mode.
 
-The prefix can be adjusted by setting the env variable `KAFKA_TOPIC_PREFIX` which by default is set to `di-dep-connect`.
+The prefix can be adjusted by setting the env variable `KAFKA_TOPIC_PREFIX` which by default is set to `di-dep-connect`. The suffixes are `offsets`, `configs`, `status`.
 
 With some modifications to the topic name the [navikt/di-connect/init_topics.sh](https://github.com/navikt/di-connect/blob/master/init_topics.sh) script can be used to create the topics by running requests toward `kafka-adminrest`.
 
