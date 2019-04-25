@@ -28,6 +28,8 @@ spec:
       value: "8083"
     - name: CONNECT_GROUP_ID
       value: "di-dep-kafka-connect"
+    - name: KAFKA_TOPIC_PREFIX
+      value: "di-dep-connect"
     - name: CONNECT_KEY_CONVERTER
       value: "io.confluent.connect.avro.AvroConverter"
     - name: CONNECT_VALUE_CONVERTER
