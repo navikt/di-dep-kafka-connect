@@ -44,6 +44,7 @@ services:
     volumes:
       - ./secrets:/var/run/secrets/nais.io/vault
     ports:
+      - "8083:8083"
       - "8084:8084"
     environment:
       CONNECT_REST_PORT: 8084
@@ -67,15 +68,3 @@ services:
       - zookeeper
       - kafka
       - schema-registry
-  connect-nginx:
-    build:
-      context: ../
-      dockerfile: Dockerfile-nginx
-    volumes:
-      - ./secrets:/var/run/secrets/nais.io/vault
-    ports:
-      - "8083:8083"
-    environment:
-      - CONNECT_HOST=connect
-    depends_on:
-      - connect
