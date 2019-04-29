@@ -1,0 +1,5 @@
+FROM nginx:1.15.12
+
+COPY nginx.conf.template /etc/nginx/conf.d/connect.conf.template
+
+CMD envsubst '${CONNECT_HOST}' < /etc/nginx/conf.d/connect.conf.template > /etc/nginx/conf.d/connect.conf && exec nginx -g 'daemon off;'
