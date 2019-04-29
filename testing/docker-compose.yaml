@@ -68,3 +68,10 @@ services:
       - zookeeper
       - kafka
       - schema-registry
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - 5432
