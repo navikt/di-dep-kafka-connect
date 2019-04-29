@@ -18,3 +18,7 @@ To find the ports for the other services run `docker ps`.
 ## Authentication
 
 The local password and username for the nginx proxy is `test`.
+
+## Helper scripts
+
+Dagpenger has a nice [collection of scripts](https://github.com/navikt/dagpenger/tree/master/script) for communicating with Kafka.
