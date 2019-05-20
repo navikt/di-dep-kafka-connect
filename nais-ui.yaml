@@ -1,0 +1,29 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: di-dep-kafka-connect-ui
+  namespace: default
+  labels:
+    team: di_dep
+spec:
+  image: landoop/kafka-connect-ui:0.9.7
+  port: 8000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: "/"
+    port: 8000
+    initialDelay: 120
+  ingresses:
+    - "https://di-dep-kafka-connect-ui.nais.preprod.local"
+  replicas:
+    min: 1
+    max: 2
+  env:
+    - name: CONNECT_URL
+      value: "https://di-dep-kafka-connect.nais.preprod.local"
