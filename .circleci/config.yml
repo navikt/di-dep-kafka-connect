@@ -1,0 +1,90 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@0.1.0
+commands:
+  docker-deploy:
+    description: "Build and push docker image"
+    parameters:
+      image:
+        type: string
+      folder:
+        type: string
+    steps:
+      - setup_remote_docker
+      - docker/check
+      - docker/build:
+          dockerfile: << parameters.folder >>/Dockerfile
+          path: << parameters.folder >>
+          image: << parameters.image >>
+      - docker/push:
+          image: << parameters.image >>
+  login-to-github:
+    description: "Login to Github"
+    parameters:
+      app-id:
+        type: integer
+    steps:
+      - run:
+          command: |
+            openssl aes-256-cbc -K $OPENSSL_KEY -iv $OPENSSL_IV -in .circleci/di-dep-ci.key.pem.enc -out .circleci/di-dep-ci.key.pem -d
+            git clone https://github.com/navikt/github-apps-support.git
+            export PATH=`pwd`/github-apps-support/bin:$PATH
+            GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh .circleci/di-dep-ci.key.pem << parameters.app-id >>`)
+            echo -e "machine api.github.com login x-access-token password $GH_TOKEN" > ~/.netrc
+            rm .circleci/di-dep-ci.key.pem
+  generate-nais-deployment:
+    description: "Generate NAIS Github deployment"
+    parameters:
+      nais-template:
+        type: string
+      deployment-template:
+        type: string
+      image:
+        type: string
+      environment:
+        type: string
+    steps:
+      - run:
+          name: "Create NAIS Github deployment"
+          command: |
+            NAISERATOR=$(yq.v2 r << parameters.nais-template >> -j)
+            NAISERATOR=$(echo $NAISERATOR | jq '.spec.image = "<< parameters.image >>:'$CIRCLE_SHA1'"' -c)
+
+            DEPLOYMENT=$(cat << parameters.deployment-template >> | jq '.payload.kubernetes.resources += ['$NAISERATOR']')
+            DEPLOYMENT=$(echo $DEPLOYMENT | jq '.environment = "<< parameters.environment >>"')
+            DEPLOYMENT=$(echo $DEPLOYMENT | jq '.ref = "'$CIRCLE_SHA1'"')
+
+            curl -i -n \
+              -X POST \
+              -d "$DEPLOYMENT" \
+              -H "Accept: application/vnd.github.ant-man-preview+json" \
+              https://api.github.com/repos/navikt/di-dep-kafka-connect/deployments
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - docker-deploy:
+          image: navikt/di-dep-kafka-connect
+          folder: .
+  deploy:
+    docker:
+      - image: circleci/golang:1.9.7
+    steps:
+      - checkout
+      - login-to-github:
+          app-id: 29518
+      - run: go get gopkg.in/mikefarah/yq.v2
+      - generate-nais-deployment:
+          nais-template: nais.yaml
+          deployment-template: deployment.json
+          image: navikt/di-dep-kafka-connect
+          environment: dev-fss
+workflows:
+  connect:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
