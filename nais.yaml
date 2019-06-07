@@ -1,61 +1,188 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: di-dep-kafka-connect-jmx-configmap
+  labels:
+    app: di-dep-kafka-connect
+    team: didep
+data:
+  jmx-kafka-connect-prometheus.yml: |+
+    jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
+    lowercaseOutputName: true
+    lowercaseOutputLabelNames: true
+    ssl: false
+    rules:
+    - pattern : "kafka.connect<type=connect-worker-metrics>([^:]+):"
+      name: "cp_kafka_connect_connect_worker_metrics_$1"
+    - pattern : "kafka.connect<type=connect-metrics, client-id=([^:]+)><>([^:]+)"
+      name: "cp_kafka_connect_connect_metrics_$1_$2"
+    - pattern : "kafka.connect<type=connector-task-metrics, connector=([^:]+), task=([^:]+)><>status: ([^:]+)"
+      name: "cp_kafka_connect_connect_connector_metrics"
+      value: 1
+      labels:
+        connector: $1
+        task: $2
+        status: $3
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: di-dep-kafka-connect
-  namespace: default
   labels:
-    team: di_dep
+    app: di-dep-kafka-connect
+    team: didep
 spec:
-  image: comesfromci
-  port: 8083
-  resources:
-    limits:
-      cpu: 1000m
-      memory: 3072Mi
-    requests:
-      cpu: 500m
-      memory: 3072Mi
-  vault:
-    enabled: true
-  liveness:
-    path: "/"
-    port: 8083
-    initialDelay: 120
-  ingresses:
-    - "https://di-dep-kafka-connect.nais.preprod.local"
-  replicas:
-    min: 1
-    max: 1
-  env:
-    - name: CONNECT_REST_PORT
-      value: "8084"
-    - name: CONNECT_GROUP_ID
-      value: "di-dep-kafka-connect"
-    - name: KAFKA_TOPIC_PREFIX
-      value: "di-dep-connect"
-    - name: CONNECT_KEY_CONVERTER
-      value: "io.confluent.connect.avro.AvroConverter"
-    - name: CONNECT_VALUE_CONVERTER
-      value: "io.confluent.connect.avro.AvroConverter"
-    - name: CONNECT_INTERNAL_KEY_CONVERTER
-      value: "org.apache.kafka.connect.json.JsonConverter"
-    - name: CONNECT_INTERNAL_VALUE_CONVERTER
-      value: "org.apache.kafka.connect.json.JsonConverter"
-    - name: CONNECT_REST_ADVERTISED_HOST_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: status.podIP
-    - name: CONNECT_SECURITY_PROTOCOL
-      value: "SASL_SSL"
-    - name: CONNECT_SASL_MECHANISM
-      value: "PLAIN"
-    - name: CONNECT_CONSUMER_SECURITY_PROTOCOL
-      value: "SASL_SSL"
-    - name: CONNECT_CONSUMER_SASL_MECHANISM
-      value: "PLAIN"
-    - name: CONNECT_PRODUCER_SECURITY_PROTOCOL
-      value: "SASL_SSL"
-    - name: CONNECT_PRODUCER_SASL_MECHANISM
-      value: "PLAIN"
-    - name: CONNECT_PLUGIN_PATH
-      value: "/usr/share/java"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: di-dep-kafka-connect
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "5556"
+        prometheus.io/scrape: "true"
+      labels:
+        app: di-dep-kafka-connect
+        team: didep
+    spec:
+      serviceAccountName: di-dep-kafka-connect
+      initContainers:
+        - image: navikt/vks:29
+          name: vks-0
+          volumeMounts:
+            - mountPath: /var/run/secrets/nais.io/vault
+              name: vault-secrets-0
+          env:
+            - name: VKS_VAULT_ADDR
+              value: https://vault.adeo.no
+            - name: VKS_AUTH_PATH
+              value: /kubernetes/preprod/fss
+            - name: VKS_KV_PATH
+              value: /kv/preprod/fss/di-dep-kafka-connect/didep
+            - name: VKS_VAULT_ROLE
+              value: di-dep-kafka-connect
+            - name: VKS_SECRET_DEST_PATH
+              value: /var/run/secrets/nais.io/vault
+            - name: VKS_IS_SIDECAR
+              value: "false"
+      containers:
+      - name: di-dep-kafka-connect
+        image: voldern/di-dep-kafka-connect:test4
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8084
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+          - containerPort: 8084
+            name: http
+          - containerPort: 5555
+            name: jmx
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 3072Mi
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        volumeMounts:
+          - mountPath: /etc/ssl/certs/ca-certificates.crt
+            name: ca-bundle
+            subPath: ca-bundle.pem
+          - mountPath: /etc/ssl/certs/java/cacerts
+            name: ca-bundle
+            subPath: ca-bundle.jks
+          - mountPath: /var/run/secrets/nais.io/vault
+            name: vault-secrets-0
+        env:
+          - name: CONNECT_REST_PORT
+            value: "8084"
+          - name: CONNECT_GROUP_ID
+            value: "di-dep-kafka-connect-group"
+          - name: KAFKA_TOPIC_PREFIX
+            value: "di-dep-connect"
+          - name: CONNECT_KEY_CONVERTER
+            value: "io.confluent.connect.avro.AvroConverter"
+          - name: CONNECT_VALUE_CONVERTER
+            value: "io.confluent.connect.avro.AvroConverter"
+          - name: CONNECT_INTERNAL_KEY_CONVERTER
+            value: "org.apache.kafka.connect.json.JsonConverter"
+          - name: CONNECT_INTERNAL_VALUE_CONVERTER
+            value: "org.apache.kafka.connect.json.JsonConverter"
+          - name: CONNECT_REST_ADVERTISED_HOST_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: CONNECT_SECURITY_PROTOCOL
+            value: "SASL_SSL"
+          - name: CONNECT_SASL_MECHANISM
+            value: "PLAIN"
+          - name: CONNECT_CONSUMER_SECURITY_PROTOCOL
+            value: "SASL_SSL"
+          - name: CONNECT_CONSUMER_SASL_MECHANISM
+            value: "PLAIN"
+          - name: CONNECT_PRODUCER_SECURITY_PROTOCOL
+            value: "SASL_SSL"
+          - name: CONNECT_PRODUCER_SASL_MECHANISM
+            value: "PLAIN"
+          - name: CONNECT_PLUGIN_PATH
+            value: "/usr/share/java"
+          - name: KAFKA_JMX_PORT
+            value: "5555"
+          - name: KAFKA_JMX_HOSTNAME
+            value: "localhost"
+          - name: NAV_TRUSTSTORE_PATH
+            value: "/etc/ssl/certs/java/cacerts"
+      - name: prometheus-jmx-exporter
+        image: solsson/kafka-prometheus-jmx-exporter@sha256:6f82e2b0464f50da8104acd7363fb9b995001ddff77d248379f8788e78946143
+        command:
+          - java
+          - -XX:+UnlockExperimentalVMOptions
+          - -XX:+UseCGroupMemoryLimitForHeap
+          - -XX:MaxRAMFraction=1
+          - -XshowSettings:vm
+          - -jar
+          - jmx_prometheus_httpserver.jar
+          - "5556"
+          - /etc/jmx-kafka-connect/jmx-kafka-connect-prometheus.yml
+        volumeMounts:
+          - name: jmx-config
+            mountPath: /etc/jmx-kafka-connect
+        ports:
+          - containerPort: 5556
+      volumes:
+        - name: jmx-config
+          configMap:
+            name: di-dep-kafka-connect-jmx-configmap
+        - name: ca-bundle
+          configMap:
+            defaultMode: 420
+            name: ca-bundle
+        - name: vault-secrets-0
+          emptyDir:
+            medium: Memory
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: di-dep-kafka-connect
+  labels:
+    app: di-dep-kafka-connect
+    team: didep
+spec:
+  type: ClusterIP
+  selector:
+    app: di-dep-kafka-connect
+  ports:
+    - name: http
+      port: 8084
+      targetPort: 8084

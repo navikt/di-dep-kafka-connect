@@ -46,6 +46,7 @@ services:
     ports:
       - "8083:8083"
       - "8084:8084"
+      - "5555:5555"
     environment:
       CONNECT_REST_PORT: 8084
       CONNECT_GROUP_ID: compose-connect-group
@@ -64,6 +65,8 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java"
+      KAFKA_JMX_PORT: 5555
+      KAFKA_JMX_HOSTNAME: connect
     depends_on:
       - zookeeper
       - kafka
@@ -75,3 +78,19 @@ services:
       POSTGRES_PASSWORD: test
     ports:
       - 5432
+  prometheus-jmx-exporter:
+    image: solsson/kafka-prometheus-jmx-exporter@sha256:6f82e2b0464f50da8104acd7363fb9b995001ddff77d248379f8788e78946143
+    volumes:
+      - ./jmx-kafka-connect-prometheus.yml:/etc/jmx-kafka-connect/jmx-kafka-connect-prometheus.yml
+    entrypoint:
+      - java
+      - -XX:+UnlockExperimentalVMOptions
+      - -XX:+UseCGroupMemoryLimitForHeap
+      - -XX:MaxRAMFraction=1
+      - -XshowSettings:vm
+      - -jar
+      - jmx_prometheus_httpserver.jar
+      - "5556"
+      - /etc/jmx-kafka-connect/jmx-kafka-connect-prometheus.yml
+    ports:
+      - "5556:5556"
