@@ -82,7 +82,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 1
         ports:
-          - containerPort: 8084
+          - containerPort: 8083
             name: http
           - containerPort: 5555
             name: jmx
@@ -185,5 +185,28 @@ spec:
     app: di-dep-kafka-connect
   ports:
     - name: http
-      port: 8084
-      targetPort: 8084
+      protocol: TCP
+      port: 80
+      targetPort: http
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: di-dep-kafka-connect
+  annotations:
+    prometheus.io/path: /
+    prometheus.io/scrape: "true"
+  labels:
+    app: di-dep-kafka-connect
+    team: didep
+spec:
+  rules:
+    - host: di-dep-kafka-connect.nais.preprod.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: di-dep-kafka-connect
+              servicePort: 80
