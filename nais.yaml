@@ -77,7 +77,8 @@ spec:
             path: /
             port: 8084
             scheme: HTTP
-          periodSeconds: 10
+          initialDelaySeconds: 120
+          periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
         ports:
