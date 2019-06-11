@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  nais: navikt/nais-deployment@dev:add-command-to-login-to-github
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9.7
+    steps:
+      - checkout
+      - run: go get gopkg.in/mikefarah/yq.v2
+      - nais/docker-deploy:
+          image: navikt/di-dep-kafka-connect
+      - nais/login-to-github:
+          github-app-id: 29518
+      - run:
+          name: "Set image name in k8s config"
+          command: |
+            sed -i s/FROMCI/navikt\\/di-dep-kafka-connect:$CIRCLE_SHA1/ nais.yaml
+      - run:
+          name: "Create Github commit"
+          command: |
+            git config user.name didep-ci[bot]
+            git config user.email didep-ci[bot]@users.noreply.github.com
+
+            git add nais.yaml
+            git commit -m "[from ci] Update docker image in k8s config [ci skip]"
+            git push https://x-access-token:$GH_TOKEN@github.com/navikt/di-dep-kafka-connect.git circleci-deployment
+workflows:
+  build:
+    jobs:
+      - build:
+          context: NAIS deployment
+          filters:
+            branches:
+              only:
+                - master

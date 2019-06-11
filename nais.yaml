@@ -70,7 +70,7 @@ spec:
               value: "false"
       containers:
       - name: di-dep-kafka-connect
-        image: voldern/di-dep-kafka-connect:test4
+        image: FROMCI
         livenessProbe:
           failureThreshold: 3
           httpGet:
