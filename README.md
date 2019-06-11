@@ -30,3 +30,7 @@ Vault -> ENV var mapping:
 | *_SCHEMA_REGISTRY_URL     | schema.registry   |
 | *_SASL_JAAS_CONFIG        | sasl.jaas.config  |
 | CONNECT_BOOTSTRAP_SERVERS | bootstrap.servers |
+
+## Deployment
+
+For now you need to run `kubectl apply` after merging with master and letting the CI update the nais.yaml with the new URL to the image.
