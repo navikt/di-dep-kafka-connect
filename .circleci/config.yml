@@ -16,7 +16,7 @@ jobs:
           name: "Set image name in k8s config"
           command: |
             awk -v image="navikt/di-dep-kafka-connect:$CIRCLE_SHA1" '/image:/{c+=1}{if(c==2){sub("image: .*","image: " image,$0)};print}' nais.yaml > nais-tmp.yaml
-            mv nais-tmp.yaml > nais.yaml
+            mv nais-tmp.yaml nais.yaml
       - run:
           name: "Create Github commit"
           command: |
