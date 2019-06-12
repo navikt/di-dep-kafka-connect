@@ -25,7 +25,7 @@ jobs:
 
             git add nais.yaml
             git commit -m "[from ci] Update docker image in k8s config [ci skip]"
-            git push https://x-access-token:$GH_TOKEN@github.com/navikt/di-dep-kafka-connect.git circleci-deployment
+            git push https://x-access-token:$GH_TOKEN@github.com/navikt/di-dep-kafka-connect.git master
 workflows:
   build:
     jobs:
