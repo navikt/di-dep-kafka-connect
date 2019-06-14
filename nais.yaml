@@ -70,7 +70,7 @@ spec:
               value: "false"
       containers:
       - name: di-dep-kafka-connect
-        image: navikt/di-dep-kafka-connect:8585cf70cc7a11c82278aa033a7394a59cbb4e6e
+        image: navikt/di-dep-kafka-connect:d038f6cc47a5cf55a9abd7d07cf9f0ec84fad807
         livenessProbe:
           failureThreshold: 3
           httpGet:
