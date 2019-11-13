@@ -4,7 +4,7 @@ metadata:
   name: di-dep-kafka-connect-jmx-configmap
   labels:
     app: di-dep-kafka-connect
-    team: didep
+    team: dataplattform
 data:
   jmx-kafka-connect-prometheus.yml: |+
     jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
@@ -32,7 +32,7 @@ metadata:
   name: di-dep-kafka-connect
   labels:
     app: di-dep-kafka-connect
-    team: didep
+    team: dataplattform
 spec:
   replicas: 1
   selector:
@@ -46,7 +46,7 @@ spec:
         prometheus.io/scrape: "true"
       labels:
         app: di-dep-kafka-connect
-        team: didep
+        team: dataplattform
     spec:
       serviceAccountName: di-dep-kafka-connect
       initContainers:
@@ -61,7 +61,7 @@ spec:
             - name: VKS_AUTH_PATH
               value: /kubernetes/preprod/fss
             - name: VKS_KV_PATH
-              value: /kv/preprod/fss/di-dep-kafka-connect/didep
+              value: /kv/preprod/fss/di-dep-kafka-connect/dataplattform
             - name: VKS_VAULT_ROLE
               value: di-dep-kafka-connect
             - name: VKS_SECRET_DEST_PATH
@@ -178,7 +178,7 @@ metadata:
   name: di-dep-kafka-connect
   labels:
     app: di-dep-kafka-connect
-    team: didep
+    team: dataplattform
 spec:
   type: ClusterIP
   selector:
@@ -200,7 +200,7 @@ metadata:
     prometheus.io/scrape: "true"
   labels:
     app: di-dep-kafka-connect
-    team: didep
+    team: dataplattform
 spec:
   rules:
     - host: di-dep-kafka-connect.nais.preprod.local

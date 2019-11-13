@@ -4,7 +4,7 @@ metadata:
   name: di-dep-kafka-connect-ui
   namespace: default
   labels:
-    team: di_dep
+    team: dataplattform
 spec:
   image: landoop/kafka-connect-ui:0.9.7
   port: 8000
