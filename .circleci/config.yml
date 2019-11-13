@@ -7,7 +7,6 @@ jobs:
       - image: circleci/golang:1.9.7
     steps:
       - checkout
-      - run: go get gopkg.in/mikefarah/yq.v2
       - nais/docker-deploy:
           image: navikt/di-dep-kafka-connect
       - nais/login-to-github:
