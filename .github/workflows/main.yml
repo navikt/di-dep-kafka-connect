@@ -1,0 +1,26 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Create docker tag
+        env:
+          NAME: di-dep-kafka-connect
+        run: |
+          echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
+          echo "$(date "+%Y-%m.%d")$(git rev-parse --short=9 HEAD)" > .docker_tag
+      - name: Build docker image
+        run: docker build -t $(cat .docker_image):$(cat .docker_tag)
+      - name: Login to Github package registry
+        run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+      - name: Push docker image
+        run: docker push $(cat .docker_image):$(cat .docker_tag)
