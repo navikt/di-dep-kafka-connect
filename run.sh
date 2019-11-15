@@ -23,4 +23,4 @@ export CONNECT_CONFIG_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-configs
 export CONNECT_OFFSET_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-offsets
 export CONNECT_STATUS_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-status
 
-exec bash -c "{ /etc/confluent/docker/run & nginx -g 'daemon off;'; }"
+exec bash -c "{ /usr/local/bin/run-jmx-prometheus.sh & /etc/confluent/docker/run & nginx -g 'daemon off;'; }"
