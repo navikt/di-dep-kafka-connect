@@ -21,7 +21,7 @@ we also need to configure SASL_SSL to be able to access the internal cluster usi
 - `CONNECT_[(CONSUMER/PRODUCER)]_SSL_TRUSTSTORE_PASSWORD`
 - `CONNECT_[(CONSUMER/PRODUCER)]_SASL_JAAS_CONFIG`
 
-Configuration of all environment variables not defined in [nais.yaml](nais.yaml) is handled through Vault or NAV specific environment variables in [run.sh](run.sh).
+Configuration of all environment variables not defined in [nais/nais-dev.yaml](nais/nais-dev.yaml) and [nais/nais-prod.yaml](nais/nais-prod.yaml) is handled through Vault or NAV specific environment variables in [run.sh](run.sh).
 
 Vault -> ENV var mapping:
 
@@ -33,4 +33,5 @@ Vault -> ENV var mapping:
 
 ## Deployment
 
-For now you need to run `kubectl apply` after merging with master and letting the CI update the nais.yaml with the new URL to the image.
+Is handled by github actions
+[![Current status](https://github.com/navikt/di-dep-kafka-connect/workflows/build/badge.svg)]

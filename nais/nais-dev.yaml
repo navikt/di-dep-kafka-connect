@@ -10,7 +10,7 @@ spec:
   port: 8083
   prometheus:
     enabled: true
-    port: 5556
+    port: "5556"
     path: /
   liveness:
     path: /
