@@ -6,7 +6,7 @@ metadata:
   labels:
     team: dataplattform
 spec:
-  image: landoop/kafka-connect-ui:0.9.7
+  image: lensesio/kafka-connect-ui:0.9.7
   port: 8000
   resources:
     limits:
