@@ -4,7 +4,7 @@ metadata:
   name: di-dep-kafka-connect
   namespace: default
   labels:
-    team: {{ team }}
+    team: dataplattform
 spec:
   image: {{ image }}
   port: 8083
