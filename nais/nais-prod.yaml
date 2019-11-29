@@ -1,12 +1,12 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: di-dep-kafka-connect
+  name: nada-kafka-connect
   namespace: default
   labels:
-    team: { { team } }
+    team: dataplattform
 spec:
-  image: { { image } }
+  image: {{ image }}
   port: 8084
   prometheus:
     enabled: true
@@ -26,14 +26,14 @@ spec:
       cpu: 1000m
       memory: 2048Mi
   ingresses:
-    - "https://di-dep-kafka-connect.nais.adeo.no"
+    - "https://nada-kafka-connect.nais.adeo.no"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"
     - name: CONNECT_GROUP_ID
-      value: "di-dep-kafka-connect-group"
+      value: "nada-kafka-connect-group"
     - name: KAFKA_TOPIC_PREFIX
-      value: "di-dep-connect"
+      value: "nada-connect"
     - name: CONNECT_KEY_CONVERTER
       value: "io.confluent.connect.avro.AvroConverter"
     - name: CONNECT_VALUE_CONVERTER
