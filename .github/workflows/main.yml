@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/di-dep-kafka-connect:${{ github.sha }}
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/nada-kafka-connect:${{ github.sha }}
 
 jobs:
   build:
