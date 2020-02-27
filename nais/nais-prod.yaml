@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: nada-kafka-connect
-  namespace: default
+  namespace: dataplattform
   labels:
     team: dataplattform
 spec:
@@ -26,7 +26,7 @@ spec:
       cpu: 1000m
       memory: 2048Mi
   ingresses:
-    - "https://nada-kafka-connect.nais.adeo.no"
+    - "https://nada-kafka-connect.dataplattform.nais.adeo.no"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"

@@ -26,7 +26,7 @@ RUN set -ex; \
     rm -rf /var/log/dpkg.log /var/log/alternatives.log /var/log/apt
 
 
-FROM confluentinc/cp-kafka-connect:5.3.1 AS main
+FROM confluentinc/cp-kafka-connect:5.4.0 AS main
 
 # See https://superuser.com/questions/1423486/issue-with-fetching-http-deb-debian-org-debian-dists-jessie-updates-inrelease
 RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
