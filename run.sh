@@ -21,5 +21,6 @@ export CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=$SCHEMA_REGISTRY
 export CONNECT_CONFIG_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-configs
 export CONNECT_OFFSET_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-offsets
 export CONNECT_STATUS_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-status
+export CONNECT_CLIENT_CONFIG_OVERRIDE_POLICY=Principal
 
 exec bash -c "{ /etc/confluent/docker/run & nginx -g 'daemon off;' & /usr/local/bin/run-jmx-prometheus.sh; }"
