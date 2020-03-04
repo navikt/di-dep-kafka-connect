@@ -26,4 +26,4 @@ spec:
     max: 2
   env:
     - name: CONNECT_URL
-      value: "https://nada-kafka-connect"
+      value: "https://nada-kafka-connect.nais.preprod.local"
