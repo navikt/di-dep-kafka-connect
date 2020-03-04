@@ -28,7 +28,7 @@ Vault -> ENV var mapping:
 | Environment variable      | Vault key         |
 | ----                      | ------            |
 | *_SCHEMA_REGISTRY_URL     | schema.registry   |
-| *_SASL_JAAS_CONFIG        | sasl.jaas.config  |
+| *_SASL_JAAS_CONFIG        | Handled via service user registration in vault  |
 | CONNECT_BOOTSTRAP_SERVERS | bootstrap.servers |
 
 ## Deployment

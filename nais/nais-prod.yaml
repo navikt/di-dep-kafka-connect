@@ -33,7 +33,7 @@ spec:
       cpu: 1000m
       memory: 2048Mi
   ingresses:
-    - "https://nada-kafka-connect.dataplattform.nais.adeo.no"
+    - "https://nada-kafka-connect.nais.adeo.no"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"
