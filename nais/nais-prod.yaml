@@ -8,6 +8,13 @@ metadata:
 spec:
   image: {{ image }}
   port: 8084
+  vault:
+    enabled: true
+    paths:
+      - kvPath: "serviceuser/prod/srvnadaconnect"
+        mountPath: "/secrets/serviceuser/srvNadaConnect"
+      - kvPath: "kv/prod/fss/nada-kafka-connect"
+        mountPath: "/var/run/secrets/nais/io/vault/"
   prometheus:
     enabled: true
     port: 5556

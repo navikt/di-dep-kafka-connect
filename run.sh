@@ -6,11 +6,12 @@ export CONNECT_CONSUMER_SSL_TRUSTSTORE_LOCATION=$NAV_TRUSTSTORE_PATH
 export CONNECT_CONSUMER_SSL_TRUSTSTORE_PASSWORD=$NAV_TRUSTSTORE_PASSWORD
 export CONNECT_PRODUCER_SSL_TRUSTSTORE_LOCATION=$NAV_TRUSTSTORE_PATH
 export CONNECT_PRODUCER_SSL_TRUSTSTORE_PASSWORD=$NAV_TRUSTSTORE_PASSWORD
-
-SCHEMA_REGISTRY=$(cat /var/run/secrets/nais.io/vault/schema.registry)
+export CONNECT_SERVICEUSER_USERNAME=$(cat /secrets/serviceuser/srvNadaConnect/username)
+export CONNECT_SERVICEUSER_PASSWORD=$(cat /secrets/serviceuser/srvNadaConnect/password)
+export SCHEMA_REGISTRY=$(cat /var/run/secrets/nais.io/vault/schema.registry)
 
 export CONNECT_BOOTSTRAP_SERVERS=$(cat /var/run/secrets/nais.io/vault/bootstrap.servers)
-export CONNECT_SASL_JAAS_CONFIG=$(cat /var/run/secrets/nais.io/vault/sasl.jaas.config)
+export CONNECT_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$CONNECT_SERVICEUSER_USERNAME\" password=\"$CONNECT_SERVICEUSER_PASSWORD\";"
 export CONNECT_CONSUMER_SASL_JAAS_CONFIG=$CONNECT_SASL_JAAS_CONFIG
 export CONNECT_PRODUCER_SASL_JAAS_CONFIG=$CONNECT_SASL_JAAS_CONFIG
 
