@@ -11,10 +11,10 @@ spec:
   vault:
     enabled: true
     paths:
-      - kvPath: "serviceuser/dev/srvnadaconnect"
-        mountPath: "/secrets/serviceuser/srvNadaConnect"
-      - kvPath: "kv/preprod/fss/nada-kafka-connect"
-        mountPath: "/var/run/secrets/nais/io/vault/"
+      - kvPath: /serviceuser/dev/srvnadaconnect
+        mountPath: /secrets/serviceuser/srvNadaConnect
+      - kvPath: /kv/preprod/fss/nada-kafka-connect
+        mountPath: /var/run/secrets/nais/io/vault/
   prometheus:
     enabled: true
     port: "5556"
