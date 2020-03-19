@@ -1,14 +1,14 @@
 version: '3.7'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.4.0
+    image: confluentinc/cp-zookeeper:5.4.1
     ports:
       - 2181
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
   kafka:
-    image: confluentinc/cp-kafka:5.4.0
+    image: confluentinc/cp-kafka:5.4.1
     ports:
       - "9092:9092"
       - "19092:19092"
@@ -21,7 +21,7 @@ services:
     depends_on:
       - zookeeper
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.4.0
+    image: confluentinc/cp-schema-registry:5.4.1
     ports:
       - "8081:8081"
     environment:
@@ -102,11 +102,10 @@ services:
     ports:
       - "8200:8200"
     environment:
-      SKIP_SETCAP: "true"
-    environment:
       VAULT_DEV_ROOT_TOKEN_ID: "123456789"
       VAULT_ADDR: "http://localhost:8200"
       VAULT_TOKEN: "123456789"
+      SKIP_SETCAP: "true"
   kafka-connect-ui:
     image: landoop/kafka-connect-ui:0.9.7
     ports:
