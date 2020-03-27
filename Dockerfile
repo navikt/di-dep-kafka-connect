@@ -49,6 +49,8 @@ COPY --from=jmxexporter /usr/local/jmx_prometheus_httpserver.jar /usr/local/jmx_
 COPY jmx-kafka-connect-prometheus.yml /usr/local/jmx_prometheus/
 COPY run-jmx-prometheus.sh /usr/local/bin
 
+### Setup Oracle JDBC driver
+COPY ojdbc8-12.2.0.1.jar /usr/share/java/kafka-connect-jdbc/jars/
 
 # CMD ["/bin/bash"]
 CMD ["/usr/local/bin/run-kafka-connect.sh"]
