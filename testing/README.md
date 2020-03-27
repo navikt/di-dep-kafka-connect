@@ -19,6 +19,12 @@ To find the ports for the other services run `docker ps`.
 
 The local password and username for the nginx proxy is `test`.
 
+## Test Scripts
+
+The `connect-test` directory contains Python scripts for creating test topics and creating JDBC Connectors to test 
+that Connect can handle the required use cases. Specifically the complex (MAP/STRUCT) data types.
+
+
 ## Helper scripts
 
 Dagpenger has a nice [collection of scripts](https://github.com/navikt/dagpenger/tree/master/script) for communicating with Kafka.
