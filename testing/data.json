@@ -5,8 +5,8 @@
     "topics": "dice-rolls",
     "tasks.max": "1",
     "connection.url": "jdbc:postgresql://postgres:5432/test",
-    "connection.user": "${vault:secret/data/postgres/local:username}",
-    "connection.password": "${vault:secret/data/postgres/local:password}",
+    "connection.user": "${vault:secret/postgres/local:username}",
+    "connection.password": "${vault:secret/postgres/local:password}",
     "auto.create": true,
     "auto.evolve": true
 
