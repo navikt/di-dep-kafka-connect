@@ -70,6 +70,7 @@ services:
       KAFKA_JMX_HOSTNAME: connect
       VAULT_TOKEN: "123456789"
       VAULT_ADDR: "http://vault:8200"
+      TZ: "Europe/Oslo"
     depends_on:
       - zookeeper
       - kafka
@@ -113,10 +114,9 @@ services:
       - "8000:8000"
     environment:
       CONNECT_URL: "http://connect:8083"
-  oracle-db:
+  oracle:
     image: wnameless/oracle-xe-11g-r2
     ports:
       - "1521:1521"     # DB port
-      - "8090:8080"     # APEX 
     environment: 
       ORACLE_ALLOW_REMOTE: "true"
