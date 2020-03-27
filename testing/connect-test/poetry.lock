@@ -1,0 +1,423 @@
+[[package]]
+category = "dev"
+description = "Atomic file writes."
+name = "atomicwrites"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.3.0"
+
+[[package]]
+category = "dev"
+description = "Classes Without Boilerplate"
+name = "attrs"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "19.3.0"
+
+[package.extras]
+azure-pipelines = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "pytest-azurepipelines"]
+dev = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "sphinx", "pre-commit"]
+docs = ["sphinx", "zope.interface"]
+tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
+
+[[package]]
+category = "main"
+description = "Avro is a serialization and RPC framework."
+marker = "python_version > \"3.0\""
+name = "avro-python3"
+optional = false
+python-versions = ">=3.5"
+version = "1.9.2.1"
+
+[package.extras]
+snappy = ["python-snappy"]
+zstandard = ["zstandard"]
+
+[[package]]
+category = "main"
+description = "Python package for providing Mozilla's CA Bundle."
+name = "certifi"
+optional = false
+python-versions = "*"
+version = "2019.11.28"
+
+[[package]]
+category = "main"
+description = "Universal encoding detector for Python 2 and 3"
+name = "chardet"
+optional = false
+python-versions = "*"
+version = "3.0.4"
+
+[[package]]
+category = "dev"
+description = "Cross-platform colored terminal text."
+marker = "sys_platform == \"win32\" and python_version != \"3.4\""
+name = "colorama"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.4.3"
+
+[[package]]
+category = "main"
+description = "Confluent's Python client for Apache Kafka"
+name = "confluent-kafka"
+optional = false
+python-versions = "*"
+version = "1.3.0"
+
+[package.dependencies]
+[package.dependencies.avro-python3]
+optional = true
+python = ">=3.1"
+version = "*"
+
+[package.dependencies.fastavro]
+optional = true
+version = "*"
+
+[package.dependencies.requests]
+optional = true
+version = "*"
+
+[package.extras]
+avro = ["fastavro", "requests", "avro", "avro-python3"]
+dev = ["pytest-timeout", "flake8", "fastavro", "requests", "pytest (4.6.4)", "avro", "avro-python3", "pytest"]
+
+[[package]]
+category = "main"
+description = "Fast read/write of AVRO files"
+name = "fastavro"
+optional = false
+python-versions = "*"
+version = "0.23.0"
+
+[package.dependencies]
+pytz = "*"
+
+[package.extras]
+codecs = ["python-snappy", "zstandard", "lz4", "backports.lzma"]
+lz4 = ["lz4"]
+snappy = ["python-snappy"]
+xz = ["backports.lzma"]
+zstandard = ["zstandard"]
+
+[[package]]
+category = "main"
+description = "Internationalized Domain Names in Applications (IDNA)"
+name = "idna"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "2.9"
+
+[[package]]
+category = "dev"
+description = "Read metadata from Python packages"
+marker = "python_version < \"3.8\""
+name = "importlib-metadata"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+version = "1.5.2"
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+docs = ["sphinx", "rst.linker"]
+testing = ["packaging", "importlib-resources"]
+
+[[package]]
+category = "dev"
+description = "More routines for operating on iterables, beyond itertools"
+marker = "python_version > \"2.7\""
+name = "more-itertools"
+optional = false
+python-versions = ">=3.5"
+version = "8.2.0"
+
+[[package]]
+category = "dev"
+description = "Core utilities for Python packages"
+name = "packaging"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "20.3"
+
+[package.dependencies]
+pyparsing = ">=2.0.2"
+six = "*"
+
+[[package]]
+category = "dev"
+description = "plugin and hook calling mechanisms for python"
+name = "pluggy"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.13.1"
+
+[package.dependencies]
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=0.12"
+
+[package.extras]
+dev = ["pre-commit", "tox"]
+
+[[package]]
+category = "dev"
+description = "library with cross-python path, ini-parsing, io, code, log facilities"
+name = "py"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.8.1"
+
+[[package]]
+category = "dev"
+description = "Python parsing module"
+name = "pyparsing"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "2.4.6"
+
+[[package]]
+category = "dev"
+description = "pytest: simple powerful testing with Python"
+name = "pytest"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
+version = "4.6.9"
+
+[package.dependencies]
+atomicwrites = ">=1.0"
+attrs = ">=17.4.0"
+packaging = "*"
+pluggy = ">=0.12,<1.0"
+py = ">=1.5.0"
+six = ">=1.10.0"
+wcwidth = "*"
+
+[package.dependencies.colorama]
+python = "<3.4.0 || >=3.5.0"
+version = "*"
+
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=0.12"
+
+[package.dependencies.more-itertools]
+python = ">=2.8"
+version = ">=4.0.0"
+
+[package.extras]
+testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
+
+[[package]]
+category = "main"
+description = "World timezone definitions, modern and historical"
+name = "pytz"
+optional = false
+python-versions = "*"
+version = "2019.3"
+
+[[package]]
+category = "main"
+description = "Python HTTP for Humans."
+name = "requests"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "2.23.0"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+chardet = ">=3.0.2,<4"
+idna = ">=2.5,<3"
+urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
+
+[package.extras]
+security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+
+[[package]]
+category = "dev"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "1.14.0"
+
+[[package]]
+category = "main"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+name = "urllib3"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "1.25.8"
+
+[package.extras]
+brotli = ["brotlipy (>=0.6.0)"]
+secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
+[[package]]
+category = "dev"
+description = "Measures number of Terminal column cells of wide-character codes"
+name = "wcwidth"
+optional = false
+python-versions = "*"
+version = "0.1.9"
+
+[[package]]
+category = "dev"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+marker = "python_version < \"3.8\""
+name = "zipp"
+optional = false
+python-versions = ">=3.6"
+version = "3.1.0"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
+testing = ["jaraco.itertools", "func-timeout"]
+
+[metadata]
+content-hash = "0295b979725a954d7b4ada26b9493380e83b917fbb2609bb804b41a0bd202f30"
+python-versions = "^3.7"
+
+[metadata.files]
+atomicwrites = [
+    {file = "atomicwrites-1.3.0-py2.py3-none-any.whl", hash = "sha256:03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4"},
+    {file = "atomicwrites-1.3.0.tar.gz", hash = "sha256:75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"},
+]
+attrs = [
+    {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
+    {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
+]
+avro-python3 = [
+    {file = "avro-python3-1.9.2.1.tar.gz", hash = "sha256:ca1e77a3da5ac98e8833588f71fb2e170b38e34787ee0e04920de0e9470b7d32"},
+]
+certifi = [
+    {file = "certifi-2019.11.28-py2.py3-none-any.whl", hash = "sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3"},
+    {file = "certifi-2019.11.28.tar.gz", hash = "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"},
+]
+chardet = [
+    {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
+    {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
+]
+colorama = [
+    {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
+    {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
+]
+confluent-kafka = [
+    {file = "confluent-kafka-1.3.0.tar.gz", hash = "sha256:4025ccddbc79443a4e2342de0d770f669558eb737fca2e7851558cd45f78ef78"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:0efd716da4f03f99d45fbb0d1583c5c8bf1eabc258a883588e3cd6ee06c0facb"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:d060ffc618b5618b8e01bc1414104e4c595746f28029ac91b1f7b63d5bcb72f2"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:a1925564bb10556686a9857ce22c222f1d6e66079d3379e23edec0bb3c19703b"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:63245ea826238f7c41002c6583e44d07a3a25fbcedd320af4902bb22d17a67ec"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-win32.whl", hash = "sha256:8469a8780a8d6258d4be08dc882b1d2e8114cfb93ae3836c2841ecfc127efc03"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27m-win_amd64.whl", hash = "sha256:98258fbe75c5d67f0e6103eec1763f9bb713e4258dbdac45ecf8805a975fdd5c"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:48941bff7b151ebe8fc5d958b8b039164ad9bbb4b5b66dde7d8c16ce36fa5ca5"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:fcb975bc7b26611e3c5c32f3c584ed860703f0496b22c096642ebc36d8cb4f12"},
+    {file = "confluent_kafka-1.3.0-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:99d75d06e79ec7d489cd410717d5ad303dee2a632db5d39f5d20f1ec1a40a23e"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:f294a3c3115c2b12a8f0dec6165e1bd427f3a4ca6066a9028e13f9a516c9a162"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:86bfac9a48a7a77c1f4972272521f970c4bbd55975a5c7c7d172c21dea094f28"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:70a2aa7056143ff30a8259d69327b38838f402fabbcc0699cfd8a7de4123825a"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:413cc9189ba7560bdc1010bbf3cabdcccfb794262f20aa867778e4059e789e88"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-win32.whl", hash = "sha256:4d85e900ee59cba6acbe2ed415f6b8b86c86cca4f1cf0782bca24588cb594f52"},
+    {file = "confluent_kafka-1.3.0-cp35-cp35m-win_amd64.whl", hash = "sha256:c72c9223a95b6668a805b175ab39e10a1cb2074e1cfa32a7cace758c744c4238"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:6095b248c457518d3f83ecb981a819512241b3c3fd7f461f3c55405278ab7825"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:86685d98e28bc9eade04a06b4979829f1d5c7785bced8cf335152e4dd363e4aa"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:a4600737ed4ceb6c799319d1d2977c46c00966274d868bcdeba66b655558ee26"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:ce45cc45b0dd29fb5a297a7f248f98dc5bde0142d48e07a19140f45906296b14"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-win32.whl", hash = "sha256:f7a8bb7a5e80776a2dd8d4f4edbef1ebd5fdb2f443f87e95e08f6f7c598c33e1"},
+    {file = "confluent_kafka-1.3.0-cp36-cp36m-win_amd64.whl", hash = "sha256:9350101ca2db756cb9ca2c5ef410a0c19b200267add97a76c2ffa167ac59685a"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-macosx_10_6_intel.whl", hash = "sha256:1f52d6dd04fc81cb22e89a6b579cde83634f9c98218af6fcb794e8e924fc5de0"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:1bcb0d45fba5fcfa87971667490ff41ec8aae99e8c66ec61bf2c28e4dabf2737"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:b96882b342b78b082aeedb56ee3c35d137adeadc26a63188ea36ae46ae1d485c"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:81a1f91a82c65bc3d3d77dbb821b2c91e36ec482a5fc1dec8996c00c4c5bbd3b"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-win32.whl", hash = "sha256:910cd945e9684c4d1ee8777258e6f3fa6a54e5ff8d361bba65b03275d0e57f18"},
+    {file = "confluent_kafka-1.3.0-cp37-cp37m-win_amd64.whl", hash = "sha256:4194c11fdfa47fe749eabe7f2bcd259e921a457b046df5fe82d11dd519412327"},
+    {file = "confluent_kafka-1.3.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:77f545e9b143b22d2f11609677aacf7d15855b0166a59634fb1b125ac209b7d7"},
+    {file = "confluent_kafka-1.3.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:5252f989c364b1231eb4bd26db7a6acae1020af53069c7567f4f9627afab2612"},
+    {file = "confluent_kafka-1.3.0-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:e3bcb44595824dd1c78980bb57804a18ff8de16e257e747bd2724db88acfee25"},
+    {file = "confluent_kafka-1.3.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:c57c58f812a21fa8ad9f8bac88b4cd026dfe5b4f1fc9353d4fc0186c9b6d558e"},
+]
+fastavro = [
+    {file = "fastavro-0.23.0-cp27-cp27m-macosx_10_13_x86_64.whl", hash = "sha256:43b6d4a92aa5bd0c8cee93fe4b3ed40dd2c556d0712c797a9a9744b9242b84e5"},
+    {file = "fastavro-0.23.0-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:f926e7d93e8425ed87420a064272bb7c86215f35ecf619425d27c6085c60a925"},
+    {file = "fastavro-0.23.0-cp27-cp27m-win32.whl", hash = "sha256:02e147484f7794b6ef734864b17d47171cdb0e74d65f74b765c4beedbb72ae27"},
+    {file = "fastavro-0.23.0-cp27-cp27m-win_amd64.whl", hash = "sha256:811bcaba0b455159dee3b9711084dda7cd8b9a88b8933e9c62c081a80b32ecf0"},
+    {file = "fastavro-0.23.0-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:e96cd6cee608547934d6743db16df50760370d2a335f32ad58b0cc23b67deb2c"},
+    {file = "fastavro-0.23.0-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:018a6d1d62a8f34c39aa5eb8a1b7fd924f1cda0c4094ff038140ec62528f355f"},
+    {file = "fastavro-0.23.0-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:085230be7d7385a3a1d7f438e2de5f08a20d93d48f96074bfcc7bb507b3beb09"},
+    {file = "fastavro-0.23.0-cp35-cp35m-win32.whl", hash = "sha256:720d6c68c918dd73f48cd849acad1705673e58a6af4966c46761001821243bd9"},
+    {file = "fastavro-0.23.0-cp35-cp35m-win_amd64.whl", hash = "sha256:d31ca0335e2fbd69218f23b2ea5852ee16c09ec1fc76cafb81330a5f95654e37"},
+    {file = "fastavro-0.23.0-cp36-cp36m-macosx_10_13_x86_64.whl", hash = "sha256:1e833c1c671152ac3630b5bb064672feccd9d845ea434a6d5daae768d3967a0a"},
+    {file = "fastavro-0.23.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:c87126770d19846d1d3b027bddcec7e18cd6ef6b40d450eb824135033d3bca21"},
+    {file = "fastavro-0.23.0-cp36-cp36m-win32.whl", hash = "sha256:b19b13d2b6641a6636b7b8c682d7c187e57916c96c9000f3a20c7066e852ae19"},
+    {file = "fastavro-0.23.0-cp36-cp36m-win_amd64.whl", hash = "sha256:4c9c1dffd35d02c74c46140f41e05424f7f5e283b6031df1fad522a3f9b09918"},
+    {file = "fastavro-0.23.0-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:1ef818df7a1260afc1f6e166f2ee68c6b4518af5d71f00a1e48dc77e989902e9"},
+    {file = "fastavro-0.23.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:6bc7ab0d8f39bd9dd8644a6661048e45c32937c72807a600898f7a8e8cf12ac3"},
+    {file = "fastavro-0.23.0-cp37-cp37m-win32.whl", hash = "sha256:31af7de989e6cf495d8a8571aed4c36206225fbca2a9631544e37853af0db49c"},
+    {file = "fastavro-0.23.0-cp37-cp37m-win_amd64.whl", hash = "sha256:4de35434a7224562152e9f68abb88500e7bf735ffae5c34370c64d71d866a6da"},
+    {file = "fastavro-0.23.0-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:fb525a833c915247bf6d5f5fa09e59a5f86d19e12d0bff0f6756c0cdbc33c3c1"},
+    {file = "fastavro-0.23.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:2dd56f781d4c9bfc7c9519dd43f9ee9320c677efbd8a61eed42bd54b3b6956f3"},
+    {file = "fastavro-0.23.0-cp38-cp38-win32.whl", hash = "sha256:e02ddb316cd7233366763d495b90491eec8dd26cb5d275244ac763676c8a42a4"},
+    {file = "fastavro-0.23.0-cp38-cp38-win_amd64.whl", hash = "sha256:99b9a1e619038cdcbe81e27ec6b4cb1d3e9ed05f2064d7811533a5173d0d9c2d"},
+    {file = "fastavro-0.23.0.tar.gz", hash = "sha256:77466543e42f536a0b6a5c4db72a99c571eb93368aeb29a2cf328c5b92c45c86"},
+]
+idna = [
+    {file = "idna-2.9-py2.py3-none-any.whl", hash = "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"},
+    {file = "idna-2.9.tar.gz", hash = "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb"},
+]
+importlib-metadata = [
+    {file = "importlib_metadata-1.5.2-py2.py3-none-any.whl", hash = "sha256:298a914c82144c6b3b06c568a8973b89ad2176685f43cd1ea9ba968307300fa9"},
+    {file = "importlib_metadata-1.5.2.tar.gz", hash = "sha256:dfc83688553a91a786c6c91eeb5f3b1d31f24d71877bbd94ecbf5484e57690a2"},
+]
+more-itertools = [
+    {file = "more-itertools-8.2.0.tar.gz", hash = "sha256:b1ddb932186d8a6ac451e1d95844b382f55e12686d51ca0c68b6f61f2ab7a507"},
+    {file = "more_itertools-8.2.0-py3-none-any.whl", hash = "sha256:5dd8bcf33e5f9513ffa06d5ad33d78f31e1931ac9a18f33d37e77a180d393a7c"},
+]
+packaging = [
+    {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
+    {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
+]
+pluggy = [
+    {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
+    {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
+]
+py = [
+    {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
+    {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
+]
+pyparsing = [
+    {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
+    {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
+]
+pytest = [
+    {file = "pytest-4.6.9-py2.py3-none-any.whl", hash = "sha256:c77a5f30a90e0ce24db9eaa14ddfd38d4afb5ea159309bdd2dae55b931bc9324"},
+    {file = "pytest-4.6.9.tar.gz", hash = "sha256:19e8f75eac01dd3f211edd465b39efbcbdc8fc5f7866d7dd49fedb30d8adf339"},
+]
+pytz = [
+    {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
+    {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
+]
+requests = [
+    {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
+    {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
+]
+six = [
+    {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
+    {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+]
+urllib3 = [
+    {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
+    {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
+]
+wcwidth = [
+    {file = "wcwidth-0.1.9-py2.py3-none-any.whl", hash = "sha256:cafe2186b3c009a04067022ce1dcd79cb38d8d65ee4f4791b8888d6599d1bbe1"},
+    {file = "wcwidth-0.1.9.tar.gz", hash = "sha256:ee73862862a156bf77ff92b09034fc4825dd3af9cf81bc5b360668d425f3c5f1"},
+]
+zipp = [
+    {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},
+    {file = "zipp-3.1.0.tar.gz", hash = "sha256:c599e4d75c98f6798c509911d08a22e6c021d074469042177c8c86fb92eefd96"},
+]
