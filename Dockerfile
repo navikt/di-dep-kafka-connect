@@ -52,5 +52,8 @@ COPY run-jmx-prometheus.sh /usr/local/bin
 ### Setup Oracle JDBC driver
 COPY ojdbc8-12.2.0.1.jar /usr/share/java/kafka-connect-jdbc/jars/
 
+### ADD custom Oracle dialect
+COPY complex-types-oracle-dialect.jar /usr/share/java/kafka-connect-jdbc/
+
 # CMD ["/bin/bash"]
 CMD ["/usr/local/bin/run-kafka-connect.sh"]

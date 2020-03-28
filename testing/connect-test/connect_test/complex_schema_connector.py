@@ -25,7 +25,8 @@ def create():
             "connection.url": "jdbc:oracle:thin:@oracle:1521:xe",
             "insert.mode": "insert",
             "pk.mode": "record_key",
-            "table.name.format": "test_${topic}"
+            "table.name.format": "test_${topic}",
+            "dialect.name": "ComplexTypesOracleDatabaseDialect",
         }
     }
 

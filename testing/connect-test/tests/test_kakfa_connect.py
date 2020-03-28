@@ -1,5 +1,7 @@
 from connect_test import __version__
 import unittest
+import time
+
 from connect_test import complex_type_schema_producer, \
     flat_schema_producer, \
     complex_schema_connector, \
@@ -19,6 +21,7 @@ class TestKafkaConnect(unittest.TestCase):
 
     def test_create_flat_schema_connector(self):
         flat_schema_connector.create() # should not throw exception
+        time.sleep(2)
         connector_status = flat_schema_connector.get_connector_status()
         self.assertEqual("RUNNING", connector_status["connector"]["state"])
         for task in connector_status["tasks"]:
@@ -26,6 +29,7 @@ class TestKafkaConnect(unittest.TestCase):
 
     def test_create_complex_schema_connector(self):
         complex_schema_connector.create() # should not throw exception
+        time.sleep(2)
         connector_status = complex_schema_connector.get_connector_status()
         self.assertEqual("RUNNING", connector_status["connector"]["state"])
         for task in connector_status["tasks"]:
