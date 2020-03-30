@@ -55,5 +55,8 @@ COPY ojdbc8-12.2.0.1.jar /usr/share/java/kafka-connect-jdbc/jars/
 ### ADD custom Oracle dialect
 COPY complex-types-oracle-dialect.jar /usr/share/java/kafka-connect-jdbc/
 
+### ADD Kafa Connect util lib (used to convert STRUCT fields to JSON)
+COPY kafka-connect-common-1.1.9.jar /usr/share/java/kafka-connect-jdbc/jars/
+
 # CMD ["/bin/bash"]
 CMD ["/usr/local/bin/run-kafka-connect.sh"]
