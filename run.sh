@@ -24,6 +24,6 @@ export CONNECT_STATUS_STORAGE_TOPIC=${KAFKA_TOPIC_PREFIX}-status
 export CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY=Principal
 export CONNECT_CONFIG_PROVIDERS=vault
 export CONNECT_CONFIG_PROVIDERS_VAULT_CLASS=no.nav.kafkaconnect.VaultConfigProvider
-export CUB_CLASSPATH=${CUB_CLASSPATH}:/usr/share/java/vault-provider/
+
 
 exec bash -c "{ /etc/confluent/docker/run & nginx -g 'daemon off;' & /usr/local/bin/run-jmx-prometheus.sh; }"

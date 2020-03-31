@@ -39,8 +39,8 @@ RUN apt-get update && apt-get install -y nginx gettext-base
 COPY nginx.conf /etc/nginx/conf.d/connect.conf
 COPY run.sh /usr/local/bin/run-kafka-connect.sh
 RUN mkdir -p /usr/share/java/vault-provider
-COPY kafka-connect-vault-provider.jar /usr/share/java/vault-provider/
-COPY vault-java-driver.jar /usr/share/java/vault-provider/
+COPY kafka-connect-vault-provider.jar /usr/share/java/kafka/vault-provider/
+COPY vault-java-driver.jar /usr/share/java/kafka/vault-provider/
 
 ### Setup JMX exporter
 
