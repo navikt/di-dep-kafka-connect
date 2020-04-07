@@ -14,7 +14,6 @@
 
 ### Checks that the Connectors end up with status=RUNNING
 
-NOTE: Currently the complex schema fails!
 
 ## What it requires
 
