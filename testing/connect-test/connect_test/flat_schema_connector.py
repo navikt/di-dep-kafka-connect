@@ -18,7 +18,7 @@ def create():
         "name": CONNECTOR_NAME,
         "config": {
             "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-            "connection.password": "oracle",
+            "connection.password": "${vault:secret/oracle/local:password}",
             "topics": TOPIC_NAME,
             "tasks.max": "1",
             "connection.user": "system",
