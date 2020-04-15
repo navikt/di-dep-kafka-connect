@@ -37,7 +37,6 @@ RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -
 RUN apt-get update && apt-get install -y nginx gettext-base
 
 COPY nginx.conf /etc/nginx/conf.d/connect.conf
-COPY run.sh /usr/local/bin/run-kafka-connect.sh
 RUN mkdir -p /usr/share/java/vault-provider
 COPY kafka-connect-vault-provider.jar /usr/share/java/vault-provider/
 COPY vault-java-driver.jar /usr/share/java/vault-provider/
@@ -47,7 +46,6 @@ COPY vault-java-driver.jar /usr/share/java/vault-provider/
 RUN mkdir -p /usr/local/jmx_prometheus
 COPY --from=jmxexporter /usr/local/jmx_prometheus_httpserver.jar /usr/local/jmx_prometheus
 COPY jmx-kafka-connect-prometheus.yml /usr/local/jmx_prometheus/
-COPY run-jmx-prometheus.sh /usr/local/bin
 
 ### Setup Oracle JDBC driver
 COPY ojdbc8-12.2.0.1.jar /usr/share/java/kafka-connect-jdbc/jars/
@@ -58,5 +56,10 @@ COPY complex-types-oracle-dialect.jar /usr/share/java/kafka-connect-jdbc/
 ### ADD Kafa Connect util lib (used to convert STRUCT fields to JSON)
 COPY kafka-connect-common-1.1.9.jar /usr/share/java/kafka-connect-jdbc/jars/
 
-# CMD ["/bin/bash"]
-CMD ["/usr/local/bin/run-kafka-connect.sh"]
+# Install and configure s6 supervisor
+ADD https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz /tmp/
+RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C /
+COPY ./s6/ /etc/services.d/
+ENV S6_KEEP_ENV=1
+
+ENTRYPOINT ["/init"]
