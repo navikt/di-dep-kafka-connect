@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -S0
+
+foreground {
+  echo "jmx_exporter exited, will restart unless this crashes 6 times in 60 seconds"
+}
+s6-permafailon 60 6 0-255 true

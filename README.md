@@ -21,7 +21,7 @@ we also need to configure SASL_SSL to be able to access the internal cluster usi
 - `CONNECT_[(CONSUMER/PRODUCER)]_SSL_TRUSTSTORE_PASSWORD`
 - `CONNECT_[(CONSUMER/PRODUCER)]_SASL_JAAS_CONFIG`
 
-Configuration of all environment variables not defined in [nais/nais-dev.yaml](nais/nais-dev.yaml) and [nais/nais-prod.yaml](nais/nais-prod.yaml) is handled through Vault or NAV specific environment variables in [run.sh](run.sh).
+Configuration of all environment variables not defined in [nais/nais-dev.yaml](nais/nais-dev.yaml) and [nais/nais-prod.yaml](nais/nais-prod.yaml) is handled through Vault or NAV specific environment variables in [s6/connect/run](s6/connect/run).
 
 Vault -> ENV var mapping:
 

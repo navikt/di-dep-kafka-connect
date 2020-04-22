@@ -1,1 +1,0 @@
-java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -jar /usr/local/jmx_prometheus/jmx_prometheus_httpserver.jar 5556 /usr/local/jmx_prometheus/jmx-kafka-connect-prometheus.yml
