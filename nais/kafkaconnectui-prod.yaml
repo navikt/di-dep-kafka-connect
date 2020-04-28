@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: nada-kafka-connect-ui
-  namespace: default
+  namespace: dataplattform
   labels:
     team: dataplattform
 spec:
