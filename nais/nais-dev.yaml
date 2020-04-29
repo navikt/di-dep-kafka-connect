@@ -42,6 +42,7 @@ spec:
       memory: 2048Mi
   ingresses:
     - "https://nada-kafka-connect.nais.preprod.local"
+    - "https://nada-kafka-connect.dev-fss.nais.io"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"

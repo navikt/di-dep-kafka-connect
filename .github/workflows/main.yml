@@ -6,19 +6,29 @@ on:
       - master
 
 env:
-  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/nada-kafka-connect
+  BASEIMAGE: docker.pkg.github.com/${{ github.repository }}/nada-kafka-connect
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Lag tag for image
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')"
-
-      - name: Lag full image referanse
-        run: echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
+      - name: Declare image ref
+        id: declare
+        run: echo "::set-output name=image::${BASEIMAGE}:$(date +%Y%m%d%H%M%S)-$(git describe --always --dirty --exclude '*')"
+    outputs:
+      image: "${{ steps.declare.outputs.image }}"
+  build:
+    name: Build Connect
+    needs:
+      - setup
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: "${{ needs.setup.outputs.image }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
       - name: Build Docker
         run: docker build -t $IMAGE .
       - name: Login to Github Packages
@@ -27,28 +37,28 @@ jobs:
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
       - name: Push docker image
         run: docker push $IMAGE
-  deploypreprod:
-    name: Deploy to Preprod
-    needs: build
+  deploydev:
+    name: Deploy Connect to Dev
+    needs:
+      - setup
+      - build
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    env:
+      IMAGE: "${{ needs.setup.outputs.image }}"
     steps:
       - uses: actions/checkout@master
         name: Checkout code
-      - name: Lag tag for image
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')"
-
-      - name: Lag full image referanse
-        run: echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
-
       - uses: nais/deploy/actions/deploy@master
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
           CLUSTER: dev-fss
           RESOURCE: nais/nais-dev.yaml
-  deployuipreprod:
-    name: Deploy Connect UI
-    needs: build
+  deployuidev:
+    name: Deploy Connect UI to Dev
+    needs:
+      - setup
+      - deploydev
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -59,3 +69,35 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
           CLUSTER: dev-fss
           RESOURCE: nais/kafkaconnectui-dev.yaml
+  deployprod:
+    name: Deploy Connect to Prod
+    needs:
+      - setup
+      - build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: "${{ needs.setup.outputs.image }}"
+    steps:
+      - uses: actions/checkout@master
+        name: Checkout code
+      - uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
+          CLUSTER: prod-fss
+          RESOURCE: nais/nais-prod.yaml
+  deployuiprod:
+    name: Deploy Connect UI to Prod
+    needs:
+      - setup
+      - deployprod
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        name: Checkout code
+      - uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
+          CLUSTER: prod-fss
+          RESOURCE: nais/kafkaconnectui-prod.yaml

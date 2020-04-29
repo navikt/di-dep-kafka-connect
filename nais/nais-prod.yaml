@@ -17,14 +17,22 @@ spec:
         mountPath: /var/run/secrets/nais.io/vault/
   prometheus:
     enabled: true
-    port: 5556
+    port: "5556"
     path: /
   liveness:
     path: /
     port: 8084
+    initialDelaySeconds: 150
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 2
   readiness:
     path: /
     port: 8084
+    initialDelaySeconds: 150
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 2
   resources:
     limits:
       cpu: 2000m
@@ -34,6 +42,7 @@ spec:
       memory: 2048Mi
   ingresses:
     - "https://nada-kafka-connect.nais.adeo.no"
+    - "https://nada-kafka-connect.prod-fss.nais.io"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"

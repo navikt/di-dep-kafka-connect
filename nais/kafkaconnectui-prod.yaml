@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: nada-kafka-connect-ui
-  namespace: default
+  namespace: dataplattform
   labels:
     team: dataplattform
 spec:
@@ -20,11 +20,11 @@ spec:
     port: 8000
     initialDelay: 120
   ingresses:
-    - "https://nada-kafka-connect-ui.nais.preprod.local"
-    - "https://nada-kafka-connect-ui.dev-fss.nais.io"
+    - "https://nada-kafka-connect-ui.nais.adeo.no"
+    - "https://nada-kafka-connect-ui.prod-fss.nais.io"
   replicas:
     min: 1
     max: 2
   env:
     - name: CONNECT_URL
-      value: "https://nada-kafka-connect.nais.preprod.local"
+      value: "https://nada-kafka-connect.prod-fss.nais.io"
