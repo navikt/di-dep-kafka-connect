@@ -26,6 +26,8 @@ RUN set -ex; \
     rm -rf /var/log/dpkg.log /var/log/alternatives.log /var/log/apt
 
 
+#FROM confluentinc/cp-kafka-connect:5.4.1 AS main
+# TODO: Go back to the images published by Confluent when they fix https://github.com/confluentinc/cp-docker-images/issues/849
 FROM confluentinc/cp-kafka-connect:5.4.1 AS main
 
 # See https://superuser.com/questions/1423486/issue-with-fetching-http-deb-debian-org-debian-dists-jessie-updates-inrelease
