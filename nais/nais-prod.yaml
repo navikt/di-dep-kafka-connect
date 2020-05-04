@@ -19,6 +19,9 @@ spec:
     enabled: true
     port: "5556"
     path: /
+  replicas:
+    min: 3
+    max: 3
   liveness:
     path: /
     port: 8084
