@@ -11,9 +11,9 @@ spec:
   vault:
     enabled: true
     paths:
-      - kvPath: /serviceuser/data/dev/srvnadaconnect
+      - kvPath: "{{kvPaths.serviceuser}}"
         mountPath: /secrets/serviceuser/srvNadaConnect
-      - kvPath: /kv/preprod/fss/nada-kafka-connect/default
+      - kvPath: "{{kvPaths.secrets}}"
         mountPath: /var/run/secrets/nais.io/vault/
   prometheus:
     enabled: true
@@ -44,8 +44,7 @@ spec:
       cpu: 1000m
       memory: 2048Mi
   ingresses:
-    - "https://nada-kafka-connect.nais.preprod.local"
-    - "https://nada-kafka-connect.dev-fss.nais.io"
+    - "{{urls.connect}}"
   env:
     - name: CONNECT_REST_PORT
       value: "8084"
