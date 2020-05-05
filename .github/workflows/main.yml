@@ -38,7 +38,7 @@ jobs:
       - name: Push docker image
         run: docker push $IMAGE
   deploydev:
-    name: Deploy Connect to Dev
+    name: Deploy to Dev
     needs:
       - setup
       - build
@@ -53,24 +53,10 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
           CLUSTER: dev-fss
-          RESOURCE: nais/nais-dev.yaml
-  deployuidev:
-    name: Deploy Connect UI to Dev
-    needs:
-      - setup
-      - deploydev
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-        name: Checkout code
-      - uses: nais/deploy/actions/deploy@master
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
-          CLUSTER: dev-fss
-          RESOURCE: nais/kafkaconnectui-dev.yaml
+          RESOURCE: nais/kafkaconnect.yaml,nais/kafkaconnectui.yaml
+          VARS: nais/dev-vars.yaml
   deployprod:
-    name: Deploy Connect to Prod
+    name: Deploy to Prod
     needs:
       - setup
       - build
@@ -85,19 +71,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
           CLUSTER: prod-fss
-          RESOURCE: nais/nais-prod.yaml
-  deployuiprod:
-    name: Deploy Connect UI to Prod
-    needs:
-      - setup
-      - deployprod
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-        name: Checkout code
-      - uses: nais/deploy/actions/deploy@master
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_KEY }}
-          CLUSTER: prod-fss
-          RESOURCE: nais/kafkaconnectui-prod.yaml
+          RESOURCE: nais/kafkaconnect.yaml,nais/kafkaconnectui.yaml
+          VARS: nais/prod-vars.yaml

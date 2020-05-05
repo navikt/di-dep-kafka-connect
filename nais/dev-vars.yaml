@@ -1,0 +1,6 @@
+kvPaths:
+  serviceuser: /serviceuser/data/dev/srvnadaconnect
+  secrets: /kv/preprod/fss/nada-kafka-connect/default
+urls:
+  connect: https://nada-kafka-connect.dev-fss.nais.io
+  ui: https://nada-kafka-connect-ui.dev-fss.nais.io
