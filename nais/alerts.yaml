@@ -13,27 +13,29 @@ spec:
       prependText: '<!here> | '
   alerts:
     - alert: Sink lag
+      severity: warning
       expr: sum(kafka_consumergroup_group_sum_lag{group=~"connect-.*"}) > 1
       for: 30s
       description: "Consumer group lagger i namespace {{ $labels.kubernetes_namespace }}"
       action: "Undersøke om Sinken fortsetter å falle bak topic"
     - alert: Task klarte ikke å starte opp
+      severity: danger
       expr: sum(cp_kafka_connect_connect_worker_metrics_task_startup_failure_total{app=~"nada-kafka-connect", kubernetes_namespace=~"default"}) > 1
       for: 10s
       description: "Task klarer ikke å starte opp i namespace {{ $labels.kubernetes_namespace }}"
       action: "Undersøke hvorfor tasken ikke klarer å starte opp, sjekk Connector config"
   # Fra ambefalte alerts
     - alert: applikasjon nede
-      expr: up{app="<appname>", job="kubernetes-pods"} == 0
+      expr: up{app="nada-kafka-connect", job="kubernetes-pods"} == 0
       for: 2m
       description: "App {{ $labels.app }} er nede i namespace {{ $labels.kubernetes_namespace }}"
       action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }} -n {{ $labels.kubernetes_namespace }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -n {{ $labels.kubernetes_namespace }}` for logger"
     - alert: høy feilrate i logger
-      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="<appname>",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="<appname>"}[3m]))) > 10
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="nada-kafka-connect",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="nada-kafka-connect"}[3m]))) > 10
       for: 3m
       action: "Sjekk loggene til app {{ $labels.log_app }} i namespace {{ $labels.log_namespace }}, for å se hvorfor det er så mye feil"
     - alert: feil i selftest
-      expr: selftests_aggregate_result_status{app="<appname>"} > 0
+      expr: selftests_aggregate_result_status{app="nada-kafka-connect"} > 0
       for: 1m
       action: "Sjekk app {{ $labels.app }} i namespace {{ $labels.kubernetes_namespace }} sine selftest for å se hva som er galt"
     - alert: Høy andel HTTP serverfeil (5xx responser)
