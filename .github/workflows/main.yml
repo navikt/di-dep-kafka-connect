@@ -1,9 +1,8 @@
 name: build
 
 on:
-  push:
-    branches:
-      - master
+  - push
+  - pull_request
 
 env:
   BASEIMAGE: docker.pkg.github.com/${{ github.repository }}/nada-kafka-connect
@@ -17,8 +16,12 @@ jobs:
       - name: Declare image ref
         id: declare
         run: echo "::set-output name=image::${BASEIMAGE}:$(date +%Y%m%d%H%M%S)-$(git describe --always --dirty --exclude '*')"
+      - name: Set deploy flag
+        id: do_deploy
+        run: echo "::set-output name=do_deploy::${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
     outputs:
       image: "${{ steps.declare.outputs.image }}"
+      do_deploy: "${{ steps.declare.outputs.do_deploy }}"
   build:
     name: Build Connect
     needs:
@@ -37,12 +40,13 @@ jobs:
         run: docker build -t $IMAGE .
       - name: Push docker image
         run: docker push $IMAGE
+        if: needs.setup.outputs.do_deploy == 'true'
   deploydev:
     name: Deploy to Dev
     needs:
       - setup
       - build
-    if: github.ref == 'refs/heads/master'
+    if: needs.setup.outputs.do_deploy == 'true'
     runs-on: ubuntu-latest
     env:
       IMAGE: "${{ needs.setup.outputs.image }}"
@@ -60,7 +64,7 @@ jobs:
     needs:
       - setup
       - build
-    if: github.ref == 'refs/heads/master'
+    if: needs.setup.outputs.do_deploy == 'true'
     runs-on: ubuntu-latest
     env:
       IMAGE: "${{ needs.setup.outputs.image }}"
