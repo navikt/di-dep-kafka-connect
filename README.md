@@ -2,6 +2,9 @@
 
 Docker Kafka Connect image for deployment on [NAIS](https://nais.io/) based on [cp-kafka-connect](https://hub.docker.com/r/confluentinc/cp-kafka-connect/).
 
+## Documentation
+Read more about NADA Kafka Connect here: [NADA docs](https://dataplattform.gitbook.io/nada/kafka/connect)
+
 ## Usage
 
 ### Prerequisites
