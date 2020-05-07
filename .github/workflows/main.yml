@@ -13,12 +13,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Declare image ref
+      - name: Declare outputs
         id: declare
-        run: echo "::set-output name=image::${BASEIMAGE}:$(date +%Y%m%d%H%M%S)-$(git describe --always --dirty --exclude '*')"
-      - name: Set deploy flag
-        id: do_deploy
-        run: echo "::set-output name=do_deploy::${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
+        run: |
+          echo "::set-output name=image::${BASEIMAGE}:$(date +%Y%m%d%H%M%S)-$(git describe --always --dirty --exclude '*')"
+          echo "::set-output name=do_deploy::${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
     outputs:
       image: "${{ steps.declare.outputs.image }}"
       do_deploy: "${{ steps.declare.outputs.do_deploy }}"
