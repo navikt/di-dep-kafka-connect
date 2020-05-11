@@ -38,3 +38,4 @@ Vault -> ENV var mapping:
 
 Is handled by github actions
 [![Current status](https://github.com/navikt/nada-kafka-connect/workflows/build/badge.svg)]
+
