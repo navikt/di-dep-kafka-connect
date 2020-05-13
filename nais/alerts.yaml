@@ -12,12 +12,6 @@ spec:
       channel: '#kafka-connect-alerts'
       prependText: '<!here> | '
   alerts:
-    - alert: Sink lag
-      severity: warning
-      expr: sum(kafka_consumergroup_group_sum_lag{group=~"connect-.*"}) > 1
-      for: 30s
-      description: "Consumer group lagger i namespace {{ $labels.kubernetes_namespace }}"
-      action: "Undersøke om Sinken fortsetter å falle bak topic"
     - alert: Task klarte ikke å starte opp
       severity: danger
       expr: sum(cp_kafka_connect_connect_worker_metrics_task_startup_failure_total{app=~"nada-kafka-connect", kubernetes_namespace=~"default"}) > 1
