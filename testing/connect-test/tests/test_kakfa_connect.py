@@ -7,9 +7,18 @@ from connect_test import complex_type_schema_producer, \
     flat_schema_connector, \
     nested_complex_schema_connector, \
     nested_complex_type_schema_producer
+from connect_test.compose import Compose
 
 
 class TestKafkaConnect():
+    @pytest.fixture(scope="module", autouse=True)
+    def compose(self):
+        c = Compose()
+        try:
+            yield c.up()
+        finally:
+            c.down()
+
     @pytest.fixture(scope="class", autouse=True)
     def produce(self):
         complex_type_schema_producer.produce()
