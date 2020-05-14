@@ -18,7 +18,7 @@ class Compose(object):
         while start + 60 > time.monotonic():
             resp = requests.get(config.NGINX_URL)
             if resp.status_code == 200:
-                return config.NGINX_URL
+                return config.CONNECT_REST_URL
             time.sleep(2)
         raise RuntimeError("Connect not available")
 

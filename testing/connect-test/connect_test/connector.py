@@ -7,9 +7,8 @@ HEADERS = {'Content-type': 'application/json', 'Accept': 'application/json'}
 
 
 class Connector(object):
-    def __init__(self, base_endpoint, topic_name, connector_name, dialect=None, table_name=None):
+    def __init__(self, base_endpoint, topic_name, dialect=None, table_name=None):
         self.base_endpoint = base_endpoint
-        self.connector_name = connector_name
         self.topic_name = topic_name
         self.dialect = dialect
         self.table_name = table_name
@@ -34,9 +33,14 @@ class Connector(object):
             "config": config
         }
 
+    @property
+    def connector_name(self):
+        return f"Oracle_{self.__class__.__name__}"
+
     def create(self, verbose=False):
         endpoint = urljoin(self.base_endpoint, "connectors")
         resp = requests.get(endpoint, headers=HEADERS)
+        resp.raise_for_status()
         if self.connector_name not in resp.json():
             response = requests.post(endpoint, json=self._connector_config, headers=HEADERS)
             if verbose:
@@ -48,4 +52,5 @@ class Connector(object):
     def get_connector_status(self):
         endpoint = urljoin(self.base_endpoint, f"connectors/{self.connector_name}/status")
         connector_metadata = requests.get(endpoint, headers=HEADERS)
+        connector_metadata.raise_for_status()
         return connector_metadata.json()
