@@ -1,47 +1,22 @@
-import requests
-import json
-
 from connect_test import config
 from connect_test.complex_type_schema_producer import TOPIC_NAME
+from connect_test.connector import Connector
 
 """
 Creates a Kafka Connect Connector for the flat schema topic into Oracle
 """
 
 CONNECTOR_NAME = "Oracle_ComplexSchemaConnector"
-HEADERS = {'Content-type': 'application/json', 'Accept': 'application/json'}
+
 
 def create():
-    endpoint = config.CONNECT_REST_URL + "/connectors"
-    connector_config = {
-        "name": CONNECTOR_NAME,
-        "config": {
-            "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-            "connection.password": "oracle",
-            "topics": TOPIC_NAME,
-            "tasks.max": "1",
-            "connection.user": "system",
-            "auto.create": "true",
-            "connection.url": "jdbc:oracle:thin:@oracle:1521:xe",
-            "insert.mode": "insert",
-            "pk.mode": "record_key",
-            "table.name.format": "test_${topic}",
-            "dialect.name": "ComplexTypesOracleDatabaseDialect",
-        }
-    }
-
-    connectors = requests.get(endpoint, headers=HEADERS)
-    if CONNECTOR_NAME not in connectors.json():
-        response = requests.post(endpoint, json=connector_config, headers=HEADERS)
-        print(response.text)
-    else:
-        print(f"Connector={CONNECTOR_NAME} exists, do nothing")
+    connector = Connector(config.CONNECT_REST_URL, TOPIC_NAME, CONNECTOR_NAME, "ComplexTypesOracleDatabaseDialect")
+    connector.create(verbose=True)
 
 
 def get_connector_status():
-    endpoint = config.CONNECT_REST_URL + f"/connectors/{CONNECTOR_NAME}/status"
-    connector_metadata = requests.get(endpoint, headers=HEADERS)
-    return connector_metadata.json()
+    connector = Connector(config.CONNECT_REST_URL, TOPIC_NAME, CONNECTOR_NAME, "ComplexTypesOracleDatabaseDialect")
+    return connector.get_connector_status()
 
 
 if __name__ == '__main__':
