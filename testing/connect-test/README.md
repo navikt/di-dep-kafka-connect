@@ -26,4 +26,4 @@ in project root:
 
 1. `poetry install` Only necessary the first time, installs Python dependencies
 
-2. `pystest`
+2. `poetry run pytest`
