@@ -12,6 +12,7 @@ confluent-kafka = {extras = ["avro"], version = "^1.3.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
+hvac = {version = "^0.10.2", extras = ["parser"]}
 
 [build-system]
 requires = ["poetry>=0.12"]

@@ -12,7 +12,7 @@ class Compose(object):
         self.working_dir = pathlib.Path(__file__).resolve().parent.parent
 
     def up(self):
-        subprocess.run(["docker-compose", "up", "--detach", "--remove-orphans"], cwd=self.working_dir)
+        subprocess.run(["docker-compose", "up", "--detach", "--remove-orphans", "--build"], cwd=self.working_dir)
         time.sleep(5)
         start = time.monotonic()
         while start + 60 > time.monotonic():
