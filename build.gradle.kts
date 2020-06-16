@@ -1,5 +1,5 @@
-
-val libs = configurations.create("libs")
+val vault_libs = configurations.create("vault_libs")
+val jdbc_libs = configurations.create("jdbc_libs")
 
 val githubUser: String? by project
 val githubPassword: String? by project
@@ -32,16 +32,27 @@ configurations.all {
 }
 
 dependencies {
-    libs("com.oracle.database.jdbc:ojdbc8:12.2.0.1")
-    libs("com.datamountaineer:kafka-connect-common:1.1.9")
-    libs("com.bettercloud:vault-java-driver:5.1.0")
-    libs("com.github.navikt:complex-types-oracle-dialect:1.20200615105046.8df7cc9")
-    libs("com.github.navikt:kafka-connect-vault-provider:1.20200615135031.6f8122f")
+    jdbc_libs("com.oracle.database.jdbc:ojdbc8:12.2.0.1")
+    jdbc_libs("com.datamountaineer:kafka-connect-common:1.1.9")
+    jdbc_libs("com.github.navikt:complex-types-oracle-dialect:1.20200615105046.8df7cc9")
+    vault_libs("com.bettercloud:vault-java-driver:5.1.0")
+    vault_libs("com.github.navikt:kafka-connect-vault-provider:1.20200615135031.6f8122f")
 }
 
-tasks.register<Copy>("build") {
-    description = "Copy the libs to build directory"
+tasks.register<Copy>("buildJdbcLibs") {
+    description = "Copy the JDBC libs to build directory"
 
-    from(libs)
-    into("$buildDir")
+    from(jdbc_libs)
+    into("$buildDir/jdbc")
+}
+
+tasks.register<Copy>("buildVaultLibs") {
+    description = "Copy the Vault libs to build directory"
+
+    from(vault_libs)
+    into("$buildDir/vault")
+}
+
+tasks.register("build") {
+    dependsOn("buildVaultLibs", "buildJdbcLibs")
 }
