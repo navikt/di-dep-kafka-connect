@@ -40,6 +40,8 @@ jobs:
           java-version: '12.x'
       - name: Run Gradle build
         run: ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Docker
         run: docker build -t $IMAGE .
       - name: Push docker image
