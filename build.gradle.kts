@@ -36,7 +36,7 @@ dependencies {
     jdbc_libs("com.datamountaineer:kafka-connect-common:1.1.9")
     jdbc_libs("com.github.navikt:complex-types-oracle-dialect:1.20200615105046.8df7cc9")
     vault_libs("com.bettercloud:vault-java-driver:5.1.0")
-    vault_libs("com.github.navikt:kafka-connect-vault-provider:1.20200615135031.6f8122f")
+    vault_libs("com.github.navikt:kafka-connect-vault-provider:1.20200626073142.dbad512")
 }
 
 tasks.register<Copy>("buildJdbcLibs") {
