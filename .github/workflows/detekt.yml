@@ -15,6 +15,6 @@ jobs:
         with:
           args: >
             -r txt:reports/detekt.txt
-            --jvm-target JVM_11
+            --jvm-target 11
       - name: Print Report
         run: cat reports/detekt.txt
