@@ -53,6 +53,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+    - name: Set up GCC - Required for Kafka dependency
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        platform: x64
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
