@@ -59,7 +59,7 @@ jobs:
         python -m pip install poetry
         cd testing/connect-test
         poetry install
-        echo "CODEQL_PYTHON=$(which $(poetry run python))" >> $GITHUB_ENV
+        echo "CODEQL_PYTHON=$(poetry run which python)" >> $GITHUB_ENV
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
